@@ -43,8 +43,7 @@ function OverviewTab () {
   return (
     <TabPane>
       <ContentGroup title='Hierarchy Overview'>
-        <Title>Select Objects to copy to a new adress...</Title>
-        <Note>(Note: Object's without a path can not be copied to a new adress)</Note>
+        <Title>Select Pages, Subpages and Objects to copy to a new language ID...</Title>
         <ObjectBrowser onIdChecked={setSelectedPaths} />
       </ContentGroup>
       <ContentGroup title='Copy Window' minHeight={100}>

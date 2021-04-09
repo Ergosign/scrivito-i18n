@@ -1,13 +1,12 @@
 import i18nEditorDialog from './Components/i18nEditorDialog';
 import * as Scrivito from 'scrivito';
 import initI18NConfigObject from './Objects/I18NConfig';
-import './Widgets';
 
 /**
  * Extend the Scrivito Sidebar Menu with a Plugin Entry
  */
-function extend () {
-  Scrivito.extendMenu(function (menu) {
+function extend() {
+  Scrivito.extendMenu(function(menu) {
     menu.insert({
       id: 'i18n',
       onClick: () => Scrivito.openDialog('InternationalisationPlugin'),

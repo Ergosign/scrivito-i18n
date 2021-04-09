@@ -83,16 +83,13 @@ const generateTooltip = (node: Scrivito.Obj) => {
     return (
         <Tooltip>
             {node.objClass()}
+            {'\t@'}
+            {
+                node.siteId() && <PathTooltip>{node.siteId()}</PathTooltip>
+            }
             {'\t'}
             {
-                node.path() && <PathTooltip>{node.path()}</PathTooltip>
-            }
-            {
-                !node.path() && node.permalink() &&
-                <PathToolTipError>(No Path. Permalink: {node.permalink()} )</PathToolTipError>
-            }
-            {
-                !node.path() && !node.permalink() && <PathToolTipError>(No path or permalink)</PathToolTipError>
+                node.path() && <PathTooltip>Path: {node.path()}</PathTooltip>
             }
         </Tooltip>
     );
