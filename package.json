@@ -1,0 +1,33 @@
+{
+  "name": "scrivito-i18n-plugin",
+  "version": "0.1.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
+    "countries-list": "^2.6.1",
+    "react": "^17.0.2",
+    "react-checkbox-tree": "^1.6.0",
+    "react-dom": "^17.0.2",
+    "react-select": "^4.3.0",
+    "scrivito": "^1.21.0",
+    "styled-components": "^5.2.3"
+  },
+  "devDependencies": {
+    "@types/react-select": "^4.0.14",
+    "@types/react-window": "^1.8.2",
+    "@types/scrivito": "^1.20.0",
+    "@types/styled-components": "^5.1.9",
+    "react-window": "^1.8.6",
+    "sass": "^1.32.8",
+    "typescript": "^4.2.4"
+  }
+}
