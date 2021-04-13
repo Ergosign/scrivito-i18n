@@ -35,7 +35,9 @@ function DialogNav(props: DialogNavProps) {
     return (
         <Nav>
             <NavElement title='Overview' id='overview' onClick={onNavItemClick} isActive={isNavItemActive('overview')}/>
-            <NavElement title='Settings' id='settings' onClick={onNavItemClick} isActive={isNavItemActive('settings')}/>
+            {
+                //<NavElement title='Settings' id='settings' onClick={onNavItemClick} isActive={isNavItemActive('settings')}/>
+            }
         </Nav>
     );
 }

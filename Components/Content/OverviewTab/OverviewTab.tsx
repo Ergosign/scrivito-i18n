@@ -32,13 +32,16 @@ function OverviewTab () {
   const handleClick = () => {
     if (selectedLocale && selectedRootId) {
       console.error("onclick called");
-      APIWrapper.migrateObjHierarchy(selectedRootId, selectedLocale as string).then(() => {
-        //const logmsgs: string[] = selectedNodes.map(id => `Successfully copied ${id} to ${selectedLocale}`)
-        //console.log(logmsgs);
-        //setLogMessages([...logMessages, ...logmsgs]);
+      APIWrapper.migrateObjHierarchy(selectedRootId, selectedLocale as string, logFunc).then(() => {
+        setLogMessages([...logMessages, "Finished copying process"]);
       });
     }
   };
+
+  const logFunc = (log: string) => {
+    console.log("logfunc called");
+    setLogMessages((oldState) => [...oldState, log]);
+  }
 
   return (
     <TabPane>

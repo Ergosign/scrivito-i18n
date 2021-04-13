@@ -16,8 +16,6 @@ function I18nEditorDialog() {
 
     const ActiveTab = () => {
         switch (activeTab) {
-            case 'settings':
-                return <SettingsTab/>;
             default:
                 return <OverviewTab/>;
         }

@@ -24,10 +24,10 @@ class APIWrapper {
    * @param selectedLocale Where to copy to
    * @param __dry do a dry run with logging
    */
-  static async migrateObjHierarchy (rootId: string, selectedLocale: string) {
+  static async migrateObjHierarchy (rootId: string, selectedLocale: string, logFunc: (log: string) => void) {
     const searchResult = await Scrivito.load(() => Scrivito.Obj.where('_id', 'equals', rootId).first());
     if(searchResult) {
-      await migrateRecursively(searchResult, selectedLocale);
+      await migrateRecursively(searchResult, selectedLocale, undefined, logFunc);
     }
   }
 }
