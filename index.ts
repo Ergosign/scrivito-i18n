@@ -16,7 +16,7 @@ function extend() {
   });
 
   Scrivito.registerComponent('InternationalisationPlugin', i18nEditorDialog);
-  initI18NConfigObject();
+  //initI18NConfigObject();
 }
 
 export default extend();

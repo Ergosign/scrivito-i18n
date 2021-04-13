@@ -10,12 +10,7 @@ function createI18NConfigObjClass() {
         initialContent: {
             default: 'de',
         },
-        title: 'I18N Config Object',
-        attributes: {
-            default: {
-                title: 'Default Language'
-            }
-        }
+        title: 'I18N Config Object'
     });
 }
 

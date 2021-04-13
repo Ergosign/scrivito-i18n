@@ -1,16 +1,27 @@
 import * as Scrivito from 'scrivito';
+import {v4} from "uuid";
 
-export function migrateObjects(sources: string[], target: string, __dry: boolean = false) {
-    const promises: Promise<any>[] = [];
+export async function migrateRecursively(scrivitoObj: Scrivito.Obj, target: string, currentpath: string | undefined = undefined) {
+    const copy = await scrivitoObj.copy();
+    copy.update({'_siteId': target});
 
-    for (const source of sources) {
-        promises.push(migrateObject(source, target, __dry));
+    let nextpath: string;
+
+     // If our object is at root
+    if(!currentpath) {
+        copy.update({'_path': '/'})
+        nextpath = "/";
+    } else {
+        const id = v4();
+        nextpath = `${currentpath}/${id}/`
+        copy.update({'_path': nextpath})
     }
 
-    return Promise.all(promises);
-}
-
-async function migrateObject(source: string, target: string, __dry: boolean = false) {
-    const searchResult: Scrivito.Obj[] = await Scrivito.load(() => Scrivito.Obj.where('_path', 'equals', source).take());
-    let obj: Scrivito.Obj;
+    const children = scrivitoObj.children();
+    if(children) {
+        children.forEach(child => {
+            migrateRecursively(child, target, nextpath)
+        });
+    }
+    
 }

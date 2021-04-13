@@ -18,13 +18,15 @@
     "react-checkbox-tree": "^1.6.0",
     "react-select": "^4.3.0",
     "react-window": "^1.8.6",
-    "styled-components": "^5.2.3"
+    "styled-components": "^5.2.3",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@types/react-select": "^4.0.14",
     "@types/react-window": "^1.8.2",
     "@types/scrivito": "^1.20.0",
     "@types/styled-components": "^5.1.9",
+    "@types/uuid": "^8.3.0",
     "sass": "^1.32.8",
     "typescript": "^4.2.4"
   },

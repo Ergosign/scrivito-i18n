@@ -8,6 +8,7 @@ import ContentGroup from '../ContentGroup/ContentGroup';
 import ObjectBrowser from '../ObjectBrowser/ObjectBrowser';
 import TabPane from '../TabPane/TabPane';
 import LocaleSelect from '../../UI/LocaleSelect';
+import type {Node} from 'react-checkbox-tree';
 
 const Note = styled(Title)`
   margin-bottom: 0.5rem;
@@ -22,20 +23,19 @@ function OverviewTab () {
   /**
    * Selected paths in the checkbox tree
    */
-  const [selectedIds, setSelectedPaths] = useState<string[]>([]);
+  const [selectedRootId, setSelectedRootId] = useState<string | undefined>();
 
   const [selectedLocale, setSelectedLocale] = useState<string | undefined>();
 
   const [logMessages, setLogMessages] = useState<string[]>([])
 
-  console.log(selectedIds);
-
   const handleClick = () => {
-    if (selectedLocale) {
-      APIWrapper.migrateObjs(selectedIds, selectedLocale as string).then(() => {
-        const logmsgs: string[] = selectedIds.map(id => `Successfully copied ${id} to ${selectedLocale}`)
-        console.log(logmsgs);
-        setLogMessages([...logMessages, ...logmsgs]);
+    if (selectedLocale && selectedRootId) {
+      console.error("onclick called");
+      APIWrapper.migrateObjHierarchy(selectedRootId, selectedLocale as string).then(() => {
+        //const logmsgs: string[] = selectedNodes.map(id => `Successfully copied ${id} to ${selectedLocale}`)
+        //console.log(logmsgs);
+        //setLogMessages([...logMessages, ...logmsgs]);
       });
     }
   };
@@ -44,14 +44,14 @@ function OverviewTab () {
     <TabPane>
       <ContentGroup title='Hierarchy Overview'>
         <Title>Select Pages, Subpages and Objects to copy to a new language ID...</Title>
-        <ObjectBrowser onIdChecked={setSelectedPaths} />
+        <ObjectBrowser onIdChecked={setSelectedRootId} />
       </ContentGroup>
       <ContentGroup title='Copy Window' minHeight={100}>
         <LocaleSelect onChange={setSelectedLocale} />
       </ContentGroup>
       <ContentGroup title='Function Overview'>
         <ButtonGroup>
-          <Button title={`Copy to /${selectedLocale || '...'}/*`} onClick={handleClick} disabled={selectedLocale === undefined} />
+          <Button title={`Copy to [${selectedLocale || '...'}]`} onClick={handleClick} disabled={selectedLocale === undefined || selectedRootId === undefined} />
         </ButtonGroup>
       </ContentGroup>
       <ContentGroup title='Logs'>

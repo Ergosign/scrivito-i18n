@@ -1,5 +1,5 @@
 import * as Scrivito from 'scrivito';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import type {Node} from 'react-checkbox-tree';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
@@ -77,6 +77,9 @@ const icons = {
  * Filter for all objects those, which do not have a parent, e
  * @param {objects} objs
  */
+
+
+
 const getRootNodes = (objs: Scrivito.Obj[]) => Scrivito.load(() => objs.filter(obj => !obj.parent()));
 
 const generateTooltip = (node: Scrivito.Obj) => {
@@ -95,26 +98,27 @@ const generateTooltip = (node: Scrivito.Obj) => {
     );
 };
 
-const generateNodes = async (objs: Scrivito.Obj[]) => {
+const generateNodes = async (objs: Scrivito.Obj[], depth = 0) => {
     const nodes: Node[] = [];
 
     for (let i = 0; i < objs.length; i++) {
-        const node = objs[i];
-        const children = await Scrivito.load(() => node.children());
+        const scrivitoObj = objs[i];
+        const children = await Scrivito.load(() => scrivitoObj.children());
 
         let childNodes;
         if (children) {
-            childNodes = await generateNodes(children);
+            childNodes = await generateNodes(children, depth + 1);
         }
 
-        if (node.objClass() === 'Image' || node.permalink() === I18nConfigId) {
+        if (scrivitoObj.objClass() === 'Image' || scrivitoObj.permalink() === I18nConfigId) {
             continue;
         }
 
         nodes.push({
-            value: `${node.id()}`,
-            label: generateTooltip(node),
+            value: `${scrivitoObj.id()}`,
+            label: generateTooltip(scrivitoObj),
             ...((childNodes && childNodes.length > 0) ? {children: childNodes} : {}),
+            showCheckbox: depth == 0
         });
     }
     return nodes;
@@ -127,23 +131,45 @@ const getNodes = async () => {
 };
 
 interface OverviewTabProps {
-    onIdChecked: (values: string[]) => void;
+    onIdChecked: (id: string | undefined) => void;
 }
 
 function OverviewTab(props: OverviewTabProps) {
     const {onIdChecked} = props;
-
-    const [nodes, setnodes] = useState([]);
-
-    useAsync(getNodes, setnodes);
-
+    const [nodes, setNodes] = useState<Node[]>([]);
     const [checked, setChecked] = useState<string[]>([]);
     const [expanded, setExpanded] = useState<string[]>([]);
 
-    const handleCheck = (checked: string[]) => {
-        setChecked(checked);
-        onIdChecked(checked);
+    useAsync(getNodes, setNodes);
+
+    const getSelectedRootNode = (currentlyChecked: string[]): string | undefined => {
+        const filtered = nodes.filter(node => {
+            return currentlyChecked.includes(node.value)
+        });
+        return filtered.shift()?.value;
+    }
+
+    const handleCheck = (newChecked: string[]) => {
+        setChecked(newChecked);
+        onIdChecked(getSelectedRootNode(newChecked));
+        disableOtherRootNodes(newChecked);
     };
+
+    const disableOtherRootNodes = (checked: string[]) => {
+        const newNodes: Node[] = [];
+        for (const node of nodes) {
+            if(checked.includes(node.value) || checked.length === 0) {
+                newNodes.push({...node, disabled: false})
+            } else {
+                newNodes.push({...node, disabled: true})
+               
+            }
+        }
+
+        setNodes(newNodes);
+    }
+
+    
 
     return (
         <CheckboxTreeWrapper>

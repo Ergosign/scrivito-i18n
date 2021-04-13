@@ -9,17 +9,16 @@ const ButtonContent = styled.span`
 
 `;
 
-interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+interface ButtonProps {
     onClick(event: React.MouseEvent): void;
-
-    title: string
+    title: string,
+    [buttonAttribute: string]: any;
 }
 
 const button: React.FC<ButtonProps> = (props: ButtonProps) => {
-    const {title} = props;
-
+    const {title, onClick, children, ...rest} = props;
     return (
-        <Button>
+        <Button onClick={onClick} {...rest}>
             <ButtonContent>
                 {title}
             </ButtonContent>

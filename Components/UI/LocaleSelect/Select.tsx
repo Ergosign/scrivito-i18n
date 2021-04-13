@@ -12,7 +12,7 @@ const list = Object.entries(countries).map(country => {
     const name = country[0];
     const obj = country[1];
 
-    return obj.languages.map(lang => ({value: `${lang}-${name}`, label: `${obj.name} [${lang}-${name}]`}));
+    return obj.languages.map(lang => ({value: `${lang}`, label: `${obj.name} [${lang}]`}));
 }).flat().sort((a, b) => a.label.localeCompare(b.label));
 
 const LocaleSelectWrapper = styled.div`
@@ -34,9 +34,9 @@ interface SelectProps {
 export default (props: SelectProps) => {
     const {onChange} = props;
 
-    // replace cn-gnz with cn/gnz
-    const onSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        onChange(event.target?.value.toLowerCase().split("-")[0]);
+    // replace cn-gnz with cn
+    const onSelectChange = (obj: {value: string}) => {
+        onChange(obj.value.toLowerCase());
     };
 
     return (
