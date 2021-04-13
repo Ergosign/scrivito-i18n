@@ -11,3 +11,5 @@
 ![Plugin Dialog](./static/plugin.png?raw=true)
 
 Here you can see an overview of all your different sites, their siteIds and paths. From there on, you can select a root site and copy it and all its children to a new siteId, where it can be used via the Scrivito Multisite feature.
+
+##### You have to be in editing mode for this plugin to work!

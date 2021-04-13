@@ -11,7 +11,8 @@ function extend() {
       id: 'i18n',
       onClick: () => Scrivito.openDialog('InternationalisationPlugin'),
       title: 'i18n Plugin',
-      group: 'i18n'
+      group: 'i18n',
+      enabled: Scrivito.isEditorLoggedIn() && Scrivito.isInPlaceEditingActive()
     });
   });
 
