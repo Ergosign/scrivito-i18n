@@ -1,5 +1,5 @@
 import * as Scrivito from 'scrivito';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import type {Node} from 'react-checkbox-tree';
 import CheckboxTree from 'react-checkbox-tree';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
@@ -140,7 +140,9 @@ function OverviewTab(props: OverviewTabProps) {
     const [checked, setChecked] = useState<string[]>([]);
     const [expanded, setExpanded] = useState<string[]>([]);
 
-    useAsync(getNodes, setNodes);
+    useEffect(() => {
+        getNodes().then(nodes => setNodes(nodes));
+    }, [getNodes]);
 
     const getSelectedRootNode = (currentlyChecked: string[]): string | undefined => {
         const filtered = nodes.filter(node => {
@@ -191,4 +193,4 @@ function OverviewTab(props: OverviewTabProps) {
     );
 }
 
-export default OverviewTab;
+export default Scrivito.connect(OverviewTab);

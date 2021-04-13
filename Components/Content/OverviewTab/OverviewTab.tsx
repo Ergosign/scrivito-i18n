@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import 'react-checkbox-tree/lib/react-checkbox-tree.css';
 import styled from 'styled-components';
 import APIWrapper from '../../../API/APIWrapper';
@@ -9,6 +9,7 @@ import ObjectBrowser from '../ObjectBrowser/ObjectBrowser';
 import TabPane from '../TabPane/TabPane';
 import LocaleSelect from '../../UI/LocaleSelect';
 import type {Node} from 'react-checkbox-tree';
+import {v4} from "uuid";
 
 const Note = styled(Title)`
   margin-bottom: 0.5rem;
@@ -27,19 +28,20 @@ function OverviewTab () {
 
   const [selectedLocale, setSelectedLocale] = useState<string | undefined>();
 
-  const [logMessages, setLogMessages] = useState<string[]>([])
+  const [logMessages, setLogMessages] = useState<string[]>([]);
+
+  const [overviewKey, setOverviewKey] = useState(v4());
 
   const handleClick = () => {
     if (selectedLocale && selectedRootId) {
-      console.error("onclick called");
       APIWrapper.migrateObjHierarchy(selectedRootId, selectedLocale as string, logFunc).then(() => {
         setLogMessages([...logMessages, "Finished copying process"]);
+        setOverviewKey(v4());
       });
     }
   };
 
   const logFunc = (log: string) => {
-    console.log("logfunc called");
     setLogMessages((oldState) => [...oldState, log]);
   }
 
@@ -47,7 +49,7 @@ function OverviewTab () {
     <TabPane>
       <ContentGroup title='Hierarchy Overview'>
         <Title>Select Pages, Subpages and Objects to copy to a new language ID...</Title>
-        <ObjectBrowser onIdChecked={setSelectedRootId} />
+        <ObjectBrowser onIdChecked={setSelectedRootId} key={overviewKey}/>
       </ContentGroup>
       <ContentGroup title='Copy Window' minHeight={100}>
         <LocaleSelect onChange={setSelectedLocale} />
