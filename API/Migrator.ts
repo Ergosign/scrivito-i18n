@@ -6,7 +6,7 @@ export async function migrateRecursively(scrivitoObj: Scrivito.Obj, target: stri
     try {
         copy = await scrivitoObj.copy();
     } catch (err) {
-        logFunc(`Error copying ${scrivitoObj.id()}`);
+        logFunc(`Error copying ${scrivitoObj.path()}`);
     }
 
     if(copy === undefined) {
