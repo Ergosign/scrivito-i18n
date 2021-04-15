@@ -38,6 +38,9 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "scrivito": "^1.21.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "scope": "@ergosign"
   }
-
 }
