@@ -1,5 +1,5 @@
 {
-  "name": "scrivito-i18n-plugin",
+  "name": "@ergosign/scrivito-i18n-plugin",
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
@@ -8,6 +8,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc"
   },
+  "files": [
+    "dist/**/*",
+    "README.md"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -35,4 +39,5 @@
     "react-dom": "^17.0.2",
     "scrivito": "^1.21.0"
   }
+
 }
